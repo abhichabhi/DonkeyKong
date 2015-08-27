@@ -124,7 +124,7 @@ class ReviewMappingTask():
 		# pidProductNameDict = {'pid':'productNameList'}
 		# productReviewUrlDict = {'productName':[UrlList]}
 		pidProductNameDict = dict((pidProduct[0],list(set(pidProduct[1:]))) for pidProduct in self.__getListFromCSV(pidProductNameFilename))
-		productReviewUrlDict = dict((pidProduct[2],list(set(pidProduct[4:]))) for pidProduct in self.__getListFromCSV(productURLFilename))
+		productReviewUrlDict = dict((pidProduct[2],list(set(pidProduct[3:]))) for pidProduct in self.__getListFromCSV(productURLFilename))
 		
 		pidReviewURLDict = {}
 		for productName in pidProductNameDict:
