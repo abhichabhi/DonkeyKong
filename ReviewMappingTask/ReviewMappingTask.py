@@ -1,3 +1,6 @@
+''' From the master file picks the urls for a product. 
+	creates a dict with unified Id and finds the review numbers to get the review URLS
+'''
 import csv, os, sys
 import getpass
 import requests
@@ -120,11 +123,12 @@ class ReviewMappingTask():
 
 	def __getPIDtoProductNameDict(self):
 		pidProductNameFilename = self.reviewInputBaseFile + "//ReviewPidMapped.csv"
+		# {UnID:PID}
 		productURLFilename = self.reviewInputBaseFile + "//ReviewBasicURLList.csv"
 		# pidProductNameDict = {'pid':'productNameList'}
 		# productReviewUrlDict = {'productName':[UrlList]}
 		pidProductNameDict = dict((pidProduct[0],list(set(pidProduct[1:]))) for pidProduct in self.__getListFromCSV(pidProductNameFilename))
-		productReviewUrlDict = dict((pidProduct[2],list(set(pidProduct[3:]))) for pidProduct in self.__getListFromCSV(productURLFilename))
+		productReviewUrlDict = dict((pidProduct[1],list(set(pidProduct[2:]))) for pidProduct in self.__getListFromCSV(productURLFilename))
 		
 		pidReviewURLDict = {}
 		for productName in pidProductNameDict:
