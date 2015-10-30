@@ -5,7 +5,7 @@ import getpass
 username = getpass.getuser()
 
 def getURLS(category):
-	filename = "/home/" + username + "/ScrapperInput/ReviewScrapper/" + category + "/ReviewPidMapped.csv"
+	filename = "/home/" + username + "/BazaarfundaSrapperFiles/Review/input/" + category + "/ReviewPidMapped.csv"
 	profileLinks = []
         with open(filename, 'r') as f:
             readColumns = (csv.reader(f, delimiter=','))
@@ -16,8 +16,8 @@ def getURLS(category):
 
 def relocateFilesWithRealNames(category):            
 	allFileList =  getURLS(category)
-	oldDir = "/home/" + username + "/ScrapperOutput/ReviewScrapper/" + category + "/UnifiedReviews/"
-	newDir = "/home/" + username + "/ScrapperOutput/ReviewScrapper/" + category + "/FinalReviews/"
+	oldDir = "/home/" + username +"/BazaarfundaSrapperFiles/Review/output/" + category + "/UnifiedReviews/"
+	newDir = "/home/" + username + "/BazaarfundaSrapperFiles/Review/output/" + category + "/FinalReviews/"
 	reviewFiles = os.listdir(oldDir)
 	
 	caseInsensitiveStrippedDict = dict((filename.lower().replace(".csv","").strip(), filename) for filename in reviewFiles)

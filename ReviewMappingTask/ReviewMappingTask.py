@@ -11,17 +11,21 @@ class ReviewMappingTask():
 			self.productType = kwargs['productType']
 		except:
 			self.productType = None
-		self.reviewInputBaseFile = "/home/" + getpass.getuser() + "/ScrapperInput/ReviewScrapper/" + self.productType
+		self.reviewInputBaseFile = "/home/" + getpass.getuser() + "/BazaarfundaSrapperFiles/Review/input/" + self.productType
 		
 	def prepareReviewURLFile(self):
 		pidToProductNameDict = self.__getPIDtoProductNameDict()
 		pidToProductNameWithReviewCountDict = {}
+		alreadyPresentPIDList = self.__getListFromCSV(self.reviewInputBaseFile + "/ReviewScapper.csv")
+		alreadyPresentPIDList = [pdList[0] for pdList in alreadyPresentPIDList]
 		for productId in pidToProductNameDict:
+			if productId in alreadyPresentPIDList:
+				continue
 			snapdealQue = []
 			flipkartQue = []
 			amazonQue = []
 			productURLWithReviewCountList = []
-			print pidToProductNameDict[productId]
+			# print pidToProductNameDict[productId]
 			for productURL in pidToProductNameDict[productId]:
 
 				if not productURL == "":
@@ -129,7 +133,9 @@ class ReviewMappingTask():
 		# productReviewUrlDict = {'productName':[UrlList]}
 		pidProductNameDict = dict((pidProduct[0],list(set(pidProduct[1:]))) for pidProduct in self.__getListFromCSV(pidProductNameFilename))
 		productReviewUrlDict = dict((pidProduct[1],list(set(pidProduct[2:]))) for pidProduct in self.__getListFromCSV(productURLFilename))
-		
+		# print pidProductNameDict
+		# print productReviewUrlDict
+
 		pidReviewURLDict = {}
 		for productName in pidProductNameDict:
 			pidProductNameList = pidProductNameDict[productName]
@@ -147,7 +153,6 @@ class ReviewMappingTask():
 				except:
 					pass
 				pidReviewURLDict[productName] = pidReviewURLList
-		
 		return pidReviewURLDict
 
 
